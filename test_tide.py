@@ -51,13 +51,34 @@ class Test_Tata:
 
         self.driver.find_element_by_xpath("//input[@placeholder='Search']").send_keys(Keys.ENTER)
         self.driver.save_screenshot("C:\Screenshot\page5.jpg")
-
+        self.driver.back()
+        
+    @pytest.fixture
     def test_case5(self,setup,test_case1,test_case2,test_case3,test_case4):
         self.driver.find_element_by_xpath("//input[@placeholder='Search']").clear()
         self.driver.find_element_by_xpath("//input[@placeholder='Search']").send_keys("Detergent")
 
         self.driver.find_element_by_xpath("//input[@placeholder='Search']").send_keys(Keys.ENTER)
         self.driver.save_screenshot("C:\Screenshot\page6.jpg")
+        self.driver.back()
+        
+    @pytest.fixture()
+    def test_case6(self,setup,test_case1,test_case2,test_case3,test_case4,test_case5):
+        wash = self.driver.find_element_by_xpath(
+            "//button[contains(@aria-label,'Open/Close submenu')][normalize-space()='How to Wash Clothes']")
+        stain = self.driver.find_element_by_xpath("//a[contains(text(),'How to Remove Stains')]")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(wash).move_to_element(stain).click().perform()
+        self.driver.back()
+
+    def test_case7(self,setup,test_case1,test_case2,test_case3,test_case4,test_case5,test_case6):
+        our = self.driver.find_element_by_xpath(
+            "//button[contains(@aria-label,'Open/Close submenu')][normalize-space()='Our Commitment']")
+        ambition = self.driver.find_element_by_xpath("//a[normalize-space()='Our Ambition']").click()
+        actions = ActionChains(self.driver)
+        actions.move_to_element(our).move_to_element(ambition).click().perform()
+        self.driver.back()
+   
 
 
 
